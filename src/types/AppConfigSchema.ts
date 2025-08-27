@@ -4,7 +4,10 @@ import { logLevels } from './logger.ts';
 
 export const AppConfigSchema = z.object({
     github: z.object({
-        token: z.string(),
+        token: z
+            .string()
+            .min(1)
+            .regex(/^gh[ps]_[a-zA-Z0-9]{36}$/),
     }),
     logger: z.object({
         level: z.enum(logLevels),

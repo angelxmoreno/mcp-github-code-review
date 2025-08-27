@@ -4,7 +4,11 @@
 export type DeepMergeObjs<T, U> = {
     [K in keyof T | keyof U]: K extends keyof T
         ? K extends keyof U
-            ? DeepMergeObjs<T[K], U[K]>
+            ? T[K] extends PlainObj
+                ? U[K] extends PlainObj
+                    ? DeepMergeObjs<T[K], U[K]>
+                    : U[K]
+                : U[K]
             : T[K]
         : K extends keyof U
           ? U[K]
@@ -14,7 +18,12 @@ export type DeepMergeObjs<T, U> = {
 // Helper type for plain objects
 type PlainObj = { [key: string]: unknown };
 
-const isObject = (val: unknown): val is PlainObj => typeof val === 'object' && val !== null && !Array.isArray(val);
+const isPlainObject = (val: unknown): val is PlainObj => {
+    if (val === null || typeof val !== 'object') return false;
+    if (Array.isArray(val)) return false;
+    const proto = Object.getPrototypeOf(val);
+    return proto === Object.prototype || proto === null;
+};
 
 /**
  * Deeply merges two plain objects.
@@ -28,7 +37,7 @@ export function deepMergeObjs<T extends PlainObj, U extends PlainObj>(target: T,
         const tVal = target[key];
         const sVal = source[key];
 
-        if (isObject(tVal) && isObject(sVal)) {
+        if (isPlainObject(tVal) && isPlainObject(sVal)) {
             out[key] = deepMergeObjs(tVal, sVal);
         } else {
             out[key] = sVal;

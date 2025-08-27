@@ -4,4 +4,4 @@ export enum NodeEnv {
     production = 'production',
 }
 
-export const nodeEnvs = [NodeEnv.development, NodeEnv.test, NodeEnv.production] as const;
+export const nodeEnvs = Object.values(NodeEnv) as readonly NodeEnv[];

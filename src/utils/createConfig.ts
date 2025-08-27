@@ -8,10 +8,10 @@ export const createConfig = (overrides: DeepPartial<AppConfig> = {}): AppConfig 
     const env: NodeEnv = (Bun.env.NODE_ENV ?? NodeEnv.development) as NodeEnv;
     const defaultConfig: AppConfig = {
         github: {
-            token: '',
+            token: Bun.env.GITHUB_TOKEN ?? '',
         },
         logger: {
-            level: LogLevel.info,
+            level: (Bun.env.LOGGER_LEVEL ?? LogLevel.info) as LogLevel,
         },
         nodeEnv: {
             env,

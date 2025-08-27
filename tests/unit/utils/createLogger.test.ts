@@ -1,10 +1,11 @@
 import { describe, expect, test } from 'bun:test';
-import { createConfig } from '../../../src/utils/createConfig';
-import { createLogger } from '../../../src/utils/createLogger';
+import { createConfig } from '../../../src/utils/createConfig.ts';
+import { createLogger } from '../../../src/utils/createLogger.ts';
+import { mockConfig } from '../../helpers/mockConfig.ts';
 
 describe('createLogger', () => {
     test('should return a pino logger instance', () => {
-        const config = createConfig();
+        const config = createConfig(mockConfig);
         const logger = createLogger(config);
         expect(logger).toBeDefined();
         expect(typeof logger.info).toBe('function');
