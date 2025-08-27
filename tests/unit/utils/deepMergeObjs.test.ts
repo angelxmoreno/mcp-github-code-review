@@ -1,6 +1,5 @@
-
-import { deepMergeObjs } from '../../../src/utils/deepMergeObjs';
 import { describe, expect, test } from 'bun:test';
+import { deepMergeObjs } from '../../../src/utils/deepMergeObjs';
 
 describe('deepMergeObjs', () => {
     test('should merge non-nested objects', () => {

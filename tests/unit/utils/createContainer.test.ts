@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import { createContainer } from '../../../src/utils/createContainer';
 import { describe, expect, test } from 'bun:test';
-import { createConfig } from '../../../src/utils/createConfig';
-import { AppLogger } from '../../../src/types/logger';
 import type { Logger } from 'pino';
+import { AppLogger } from '../../../src/types/logger';
+import { createConfig } from '../../../src/utils/createConfig';
+import { createContainer } from '../../../src/utils/createContainer';
 
 describe('createContainer', () => {
     test('should create a container with a logger registered', () => {
