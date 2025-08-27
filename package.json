@@ -1,0 +1,36 @@
+{
+    "name": "mcp-github-code-review",
+    "version": "0.0.0",
+    "description": "MCP server that automates code review workflows with GitHub, enabling AI agents to handle PR comment triage and responses.",
+    "type": "module",
+    "module": "src/index.ts",
+    "private": false,
+    "license": "MIT",
+    "author": "Angel S. Moreno <angelxmoreno@gmail.com>",
+    "scripts": {
+        "prepare": "lefthook install",
+        "test": "bun test",
+        "test:unit": "bun test tests/unit",
+        "test:integration": "bun test tests/integration",
+        "lint": "biome check .",
+        "lint:fix": "biome check --write",
+        "lint:commits": "commitlint --from=origin/main --to=HEAD --verbose",
+        "typecheck": "tsc --noEmit",
+        "check": "bun run lint:fix && bun run typecheck && bun run test",
+        "db:init": "bun run src/scripts/init-db.ts",
+        "dev": "bun --hot src/index.ts",
+        "start": "bun src/index.ts",
+        "cli": "bun src/cli.ts",
+        "dev:cli": "bun --watch src/cli.ts"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@biomejs/biome": "^2.2.2",
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "@types/bun": "^1.2.20",
+        "lefthook": "^1.12.3",
+        "typescript": "^5.9.2"
+    },
+    "peerDependencies": {}
+}

@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: bun run lint
+      skip:
+        - merge
+        - rebase
+      glob: "*.{js,ts,tsx,jsx}"
+    types:
+      run: bun run typecheck
+      skip:
+        - merge
+        - rebase
+      glob: "*.{ts,tsx}"
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: bunx commitlint --edit $1
+
