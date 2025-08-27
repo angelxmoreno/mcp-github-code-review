@@ -28,6 +28,7 @@
         "octokit": "^5.0.3",
         "pino": "^9.9.0",
         "pino-pretty": "^13.1.1",
+        "tsyringe": "^4.10.0",
         "zod": "^4.1.3"
     },
     "devDependencies": {
