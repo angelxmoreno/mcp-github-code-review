@@ -1,7 +1,7 @@
 import { stringify } from 'safe-stable-stringify';
 
 export class AppError extends Error {
-    static errorTpl = 'Error accord: %s with context %s';
+    static errorTpl = 'Error occurred: "%s" using %s';
     protected errorType: string;
     protected errorContext: Record<string, unknown>;
 

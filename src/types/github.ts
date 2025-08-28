@@ -28,6 +28,14 @@ export type Comment = {
 };
 
 /**
+ * GraphQL PageInfo type for cursor-based pagination
+ */
+export type PageInfo = {
+    hasNextPage: boolean;
+    endCursor: string | null;
+};
+
+/**
  * GraphQL response type for PR review threads query
  */
 export type ReviewThreadsResponse = {
@@ -50,8 +58,10 @@ export type ReviewThreadsResponse = {
                             position: number | null;
                             isMinimized: boolean;
                         }>;
+                        pageInfo: PageInfo;
                     };
                 }>;
+                pageInfo: PageInfo;
             };
         };
     };

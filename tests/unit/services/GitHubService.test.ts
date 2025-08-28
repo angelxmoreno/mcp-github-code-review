@@ -146,6 +146,10 @@ describe('GitHubService', () => {
                                                 isMinimized: false,
                                             },
                                         ],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            endCursor: null,
+                                        },
                                     },
                                 },
                                 {
@@ -164,9 +168,17 @@ describe('GitHubService', () => {
                                                 isMinimized: false,
                                             },
                                         ],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            endCursor: null,
+                                        },
                                     },
                                 },
                             ],
+                            pageInfo: {
+                                hasNextPage: false,
+                                endCursor: null,
+                            },
                         },
                     },
                 },
@@ -177,11 +189,12 @@ describe('GitHubService', () => {
             const result = await gitHubService.getReviewCommentsForPullRequest(mockPullRequest);
 
             expect(mockGraphql).toHaveBeenCalledWith(
-                expect.stringContaining('query($owner: String!, $repo: String!, $pr: Int!)'),
+                expect.stringContaining('query($owner: String!, $repo: String!, $pr: Int!, $cursor: String)'),
                 {
                     owner: 'testowner',
                     repo: 'testrepo',
                     pr: 123,
+                    cursor: null,
                 }
             );
 
@@ -218,6 +231,10 @@ describe('GitHubService', () => {
                     pullRequest: {
                         reviewThreads: {
                             nodes: [],
+                            pageInfo: {
+                                hasNextPage: false,
+                                endCursor: null,
+                            },
                         },
                     },
                 },
@@ -293,9 +310,17 @@ describe('GitHubService', () => {
                                                 isMinimized: false,
                                             },
                                         ],
+                                        pageInfo: {
+                                            hasNextPage: false,
+                                            endCursor: null,
+                                        },
                                     },
                                 },
                             ],
+                            pageInfo: {
+                                hasNextPage: false,
+                                endCursor: null,
+                            },
                         },
                     },
                 },

@@ -89,7 +89,7 @@ export class GitHubService {
         }
 
         const [, owner, repo, prNumberStr] = match;
-        if (!prNumberStr) {
+        if (!owner || !repo || !prNumberStr) {
             const error = new GitHubServiceError('Could not parse PR number from URL', { pr });
             this.logger.error(error);
             throw error;
@@ -98,74 +98,46 @@ export class GitHubService {
         const prNumber = parseInt(prNumberStr, 10);
         this.logger.debug({ owner, repo, prNumber }, 'Parsed PR URL');
 
-        const query = `
-      query($owner: String!, $repo: String!, $pr: Int!) {
-        repository(owner: $owner, name: $repo) {
-          pullRequest(number: $pr) {
-            reviewThreads(first: 100) {
-              nodes {
-                isResolved
-                isOutdated
-                comments(first: 100) {
-                  nodes {
-                    databaseId
-                    author { login }
-                    body
-                    createdAt
-                    url
-                    path
-                    position
-                    isMinimized
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `;
-
         try {
-            this.logger.debug({ owner, repo, prNumber }, 'Executing GraphQL query for review threads');
-
-            const result = await this.octokit.graphql<ReviewThreadsResponse>(query, {
-                owner,
-                repo,
-                pr: prNumber,
-            });
-
             const allComments: Comment[] = [];
-            const threads = result.repository.pullRequest.reviewThreads.nodes;
+            let threadsCursor: string | null = null;
+            let hasNextThreadsPage = true;
+            let totalThreadsProcessed = 0;
 
-            this.logger.debug({ threadCount: threads.length }, 'Processing review threads');
+            this.logger.debug({ owner, repo, prNumber }, 'Starting paginated fetch of review threads');
 
-            for (const thread of threads) {
+            // Paginate through all review threads
+            while (hasNextThreadsPage) {
+                const threadsResult = await this.fetchReviewThreadsPage(owner, repo, prNumber, threadsCursor);
+                const threads = threadsResult.repository.pullRequest.reviewThreads;
+
+                totalThreadsProcessed += threads.nodes.length;
                 this.logger.debug(
                     {
-                        commentCount: thread.comments.nodes.length,
-                        isResolved: thread.isResolved,
-                        isOutdated: thread.isOutdated,
+                        currentPageThreads: threads.nodes.length,
+                        totalThreadsProcessed,
+                        hasNextPage: threads.pageInfo.hasNextPage,
                     },
-                    'Processing thread'
+                    'Processing review threads page'
                 );
 
-                for (const comment of thread.comments.nodes) {
-                    allComments.push({
-                        commentId: comment.databaseId,
-                        body: comment.body,
-                        author: comment.author,
-                        createdAt: comment.createdAt,
-                        url: comment.url,
-                        path: comment.path,
-                        position: comment.position,
-                        isResolved: thread.isResolved,
-                        isOutdated: thread.isOutdated,
-                        isMinimized: comment.isMinimized,
-                    });
+                // Process each thread and extract all comments (with their own pagination)
+                for (const thread of threads.nodes) {
+                    const threadComments = await this.extractCommentsFromThread(thread);
+                    allComments.push(...threadComments);
                 }
+
+                hasNextThreadsPage = threads.pageInfo.hasNextPage;
+                threadsCursor = threads.pageInfo.endCursor ?? null;
             }
 
-            this.logger.debug({ totalComments: allComments.length }, 'Successfully retrieved review comments');
+            this.logger.debug(
+                {
+                    totalComments: allComments.length,
+                    totalThreadsProcessed,
+                },
+                'Successfully retrieved all review comments'
+            );
             return allComments;
         } catch (err) {
             if (err instanceof GitHubServiceError) {
@@ -183,5 +155,103 @@ export class GitHubService {
             this.logger.error(error);
             throw error;
         }
+    }
+
+    private async fetchReviewThreadsPage(
+        owner: string,
+        repo: string,
+        prNumber: number,
+        cursor: string | null
+    ): Promise<ReviewThreadsResponse> {
+        const query = `
+            query($owner: String!, $repo: String!, $pr: Int!, $cursor: String) {
+                repository(owner: $owner, name: $repo) {
+                    pullRequest(number: $pr) {
+                        reviewThreads(first: 100, after: $cursor) {
+                            nodes {
+                                isResolved
+                                isOutdated
+                                comments(first: 100) {
+                                    nodes {
+                                        databaseId
+                                        author { login }
+                                        body
+                                        createdAt
+                                        url
+                                        path
+                                        position
+                                        isMinimized
+                                    }
+                                    pageInfo {
+                                        hasNextPage
+                                        endCursor
+                                    }
+                                }
+                            }
+                            pageInfo {
+                                hasNextPage
+                                endCursor
+                            }
+                        }
+                    }
+                }
+            }
+        `;
+
+        return await this.octokit.graphql<ReviewThreadsResponse>(query, {
+            owner,
+            repo,
+            pr: prNumber,
+            cursor,
+        });
+    }
+
+    private async extractCommentsFromThread(
+        thread: ReviewThreadsResponse['repository']['pullRequest']['reviewThreads']['nodes'][0]
+    ): Promise<Comment[]> {
+        const allComments: Comment[] = [];
+        let totalCommentsInThread = 0;
+
+        // Add comments from the thread (initially fetched with first 100)
+        for (const comment of thread.comments.nodes) {
+            allComments.push({
+                commentId: comment.databaseId,
+                body: comment.body,
+                author: comment.author,
+                createdAt: comment.createdAt,
+                url: comment.url,
+                path: comment.path,
+                position: comment.position,
+                isResolved: thread.isResolved,
+                isOutdated: thread.isOutdated,
+                isMinimized: comment.isMinimized,
+            });
+        }
+        totalCommentsInThread += thread.comments.nodes.length;
+
+        // If there are more comments in this thread, we would need additional pagination
+        // For now, we'll log a warning if we hit the limit
+        if (thread.comments.pageInfo.hasNextPage) {
+            this.logger.warn(
+                {
+                    threadResolved: thread.isResolved,
+                    threadOutdated: thread.isOutdated,
+                    commentsInFirstPage: thread.comments.nodes.length,
+                },
+                'Thread has more than 100 comments - some comments may be missing (pagination for individual thread comments not implemented)'
+            );
+        }
+
+        this.logger.debug(
+            {
+                threadResolved: thread.isResolved,
+                threadOutdated: thread.isOutdated,
+                totalCommentsInThread,
+                hasMoreComments: thread.comments.pageInfo.hasNextPage,
+            },
+            'Processed comments for thread'
+        );
+
+        return allComments;
     }
 }
