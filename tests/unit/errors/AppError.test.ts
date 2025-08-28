@@ -5,7 +5,7 @@ describe('AppError', () => {
     test('should handle simple objects correctly', () => {
         const error = new AppError('test error', { key: 'value' });
 
-        expect(error.message).toContain('Can not parse test error using');
+        expect(error.message).toContain('Error occurred: "test error" using');
         expect(error.message).toContain('"key": "value"');
     });
 
@@ -15,7 +15,7 @@ describe('AppError', () => {
 
         const error = new AppError('circular error', circular);
 
-        expect(error.message).toContain('Can not parse circular error using');
+        expect(error.message).toContain('Error occurred: "circular error" using');
         expect(error.message).toContain('[Circular]');
     });
 
@@ -27,7 +27,7 @@ describe('AppError', () => {
 
         const error = new AppError('bigint error', context);
 
-        expect(error.message).toContain('Can not parse bigint error using');
+        expect(error.message).toContain('Error occurred: "bigint error" using');
         expect(error.message).toContain('12345'); // BigInt should be converted to number/string
         expect(error.message).toContain('"name": "test"');
     });
@@ -42,7 +42,7 @@ describe('AppError', () => {
 
         const error = new AppError('complex error', complex);
 
-        expect(error.message).toContain('Can not parse complex error using');
+        expect(error.message).toContain('Error occurred: "complex error" using');
         expect(error.message).toContain('[Circular]');
         expect(error.message).toContain('99999'); // BigInt as number/string
     });

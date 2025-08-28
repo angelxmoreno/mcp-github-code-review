@@ -1,10 +1,12 @@
 import { AppError } from './AppError';
 
 export class GitHubServiceError extends AppError {
-    static override errorTpl = '%s using %s';
+    protected override getTemplate(): string {
+        return '%s using %s';
+    }
 
-    constructor(parsingGoal: string, parsingSource: Record<string, unknown>, cause: unknown = undefined) {
-        super(parsingGoal, parsingSource, cause);
+    constructor(errorType: string, errorContext: Record<string, unknown>, cause: unknown = undefined) {
+        super(errorType, errorContext, cause);
         Object.setPrototypeOf(this, GitHubServiceError.prototype);
     }
 }

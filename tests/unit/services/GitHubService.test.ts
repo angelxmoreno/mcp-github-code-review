@@ -72,9 +72,7 @@ describe('GitHubService', () => {
                 data: [],
             });
 
-            expect(gitHubService.getPullRequestForBranch(repoBranch)).rejects.toThrow(
-                'Can not parse No PR found using'
-            );
+            expect(gitHubService.getPullRequestForBranch(repoBranch)).rejects.toThrow('No PR found using');
         });
 
         test('should propagate GitHub API errors', async () => {
@@ -82,7 +80,7 @@ describe('GitHubService', () => {
             mockPullsList.mockRejectedValueOnce(apiError);
 
             expect(gitHubService.getPullRequestForBranch(repoBranch)).rejects.toThrow(
-                'Can not parse Failed to get pull request for branch using'
+                'Failed to get pull request for branch using'
             );
         });
 
@@ -254,7 +252,7 @@ describe('GitHubService', () => {
             };
 
             await expect(gitHubService.getReviewCommentsForPullRequest(invalidPullRequest)).rejects.toThrow(
-                'Can not parse Invalid GitHub PR URL using'
+                'Invalid GitHub PR URL using'
             );
         });
 
@@ -265,7 +263,7 @@ describe('GitHubService', () => {
             };
 
             await expect(gitHubService.getReviewCommentsForPullRequest(invalidPullRequest)).rejects.toThrow(
-                'Can not parse Invalid GitHub PR URL using'
+                'Invalid GitHub PR URL using'
             );
         });
 
@@ -274,7 +272,7 @@ describe('GitHubService', () => {
             mockGraphql.mockRejectedValueOnce(apiError);
 
             await expect(gitHubService.getReviewCommentsForPullRequest(mockPullRequest)).rejects.toThrow(
-                'Can not parse Failed to get review comments for pull request using'
+                'Failed to get review comments for pull request using'
             );
         });
 

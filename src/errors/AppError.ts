@@ -1,27 +1,28 @@
 import { stringify } from 'safe-stable-stringify';
 
 export class AppError extends Error {
-    static errorTpl = 'Error occurred: "%s" using %s';
     protected errorType: string;
     protected errorContext: Record<string, unknown>;
 
-    constructor(errorType: string, errorContext: Record<string, unknown> = {}, cause: unknown = undefined) {
-        const message = AppError.createMessage(errorType, errorContext);
-        super(message, { cause });
-        this.errorType = errorType;
-        this.errorContext = errorContext;
-        Object.setPrototypeOf(this, AppError.prototype);
+    protected getTemplate(): string {
+        return 'Error occurred: "%s" using %s';
     }
 
-    static createMessage(errorType: string, errorContext: Record<string, unknown>): string {
+    constructor(errorType: string, errorContext: Record<string, unknown> = {}, cause: unknown = undefined) {
+        super('placeholder', { cause });
+        this.message = AppError.createMessage(errorType, errorContext, this.getTemplate());
+        this.errorType = errorType;
+        this.errorContext = errorContext;
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+
+    protected static createMessage(errorType: string, errorContext: Record<string, unknown>, template: string): string {
+        let sourcePreview: string;
         try {
-            const sourcePreview = stringify(errorContext, null, 2);
-            // biome-ignore lint/complexity/noThisInStatic: we need the inherited tpl
-            return this.errorTpl.replace('%s', errorType).replace('%s', sourcePreview);
+            sourcePreview = stringify(errorContext, null, 2);
         } catch {
-            // Fallback if stringify itself fails
-            // biome-ignore lint/complexity/noThisInStatic: we need the inherited tpl
-            return this.errorTpl.replace('%s', errorType).replace('%s', '<unserializable errorContext>');
+            sourcePreview = '<unserializable errorContext>';
         }
+        return template.replace('%s', errorType).replace('%s', sourcePreview);
     }
 }
