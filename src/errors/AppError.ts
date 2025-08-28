@@ -1,3 +1,5 @@
+import { stringify } from 'safe-stable-stringify';
+
 export class AppError extends Error {
     static errorTpl = 'Can not parse %s using %s';
     protected errorType: string;
@@ -12,8 +14,14 @@ export class AppError extends Error {
     }
 
     static createMessage(errorType: string, errorContext: Record<string, unknown>): string {
-        const sourcePreview = JSON.stringify(errorContext, null, 2);
-        // biome-ignore lint/complexity/noThisInStatic: we need the inherited tpl
-        return this.errorTpl.replace('%s', errorType).replace('%s', sourcePreview);
+        try {
+            const sourcePreview = stringify(errorContext, null, 2);
+            // biome-ignore lint/complexity/noThisInStatic: we need the inherited tpl
+            return this.errorTpl.replace('%s', errorType).replace('%s', sourcePreview);
+        } catch {
+            // Fallback if stringify itself fails
+            // biome-ignore lint/complexity/noThisInStatic: we need the inherited tpl
+            return this.errorTpl.replace('%s', errorType).replace('%s', '<unserializable errorContext>');
+        }
     }
 }

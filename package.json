@@ -29,6 +29,7 @@
         "pino": "^9.9.0",
         "pino-pretty": "^13.1.1",
         "reflect-metadata": "^0.2.2",
+        "safe-stable-stringify": "^2.5.0",
         "tsyringe": "^4.10.0",
         "zod": "^4.1.3"
     },
