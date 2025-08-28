@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: we use the any type only for testing */
 import { describe, expect, test } from 'bun:test';
-import { deepMergeObjs } from '../../../src/utils/deepMergeObjs.ts';
+import { deepMergeObjs } from '../../../src/utils/deepMergeObjs';
 
 describe('deepMergeObjs', () => {
     test('should merge non-nested objects', () => {

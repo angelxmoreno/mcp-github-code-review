@@ -1,7 +1,7 @@
 import type { Logger } from 'pino';
-import { ParsingError } from '../errors/ParsingError.ts';
-import type { RepoBranch } from '../types/git.ts';
-import { $ } from '../utils/shell.ts';
+import { ParsingError } from '../errors/ParsingError';
+import type { RepoBranch } from '../types/git';
+import { $ } from '../utils/shell';
 
 type GitServiceOptions = {
     logger: Logger;

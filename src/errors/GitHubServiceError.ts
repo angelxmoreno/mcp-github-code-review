@@ -1,4 +1,4 @@
-import { AppError } from './AppError.ts';
+import { AppError } from './AppError';
 
 export class GitHubServiceError extends AppError {
     static override errorTpl = '%s using %s';

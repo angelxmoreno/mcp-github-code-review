@@ -1,8 +1,8 @@
-import { type AppConfig, AppConfigSchema } from '../types/AppConfigSchema.ts';
-import type { DeepPartial } from '../types/DeepPartial.ts';
-import { NodeEnv } from '../types/env.ts';
-import { LogLevel } from '../types/logger.ts';
-import { deepMergeObjs } from './deepMergeObjs.ts';
+import { type AppConfig, AppConfigSchema } from '../types/AppConfigSchema';
+import type { DeepPartial } from '../types/DeepPartial';
+import { NodeEnv } from '../types/env';
+import { LogLevel } from '../types/logger';
+import { deepMergeObjs } from './deepMergeObjs';
 
 export const createConfig = (overrides: DeepPartial<AppConfig> = {}): AppConfig => {
     const env: NodeEnv = (Bun.env.NODE_ENV ?? NodeEnv.development) as NodeEnv;

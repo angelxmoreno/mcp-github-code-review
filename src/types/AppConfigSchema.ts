@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { nodeEnvs } from './env.ts';
-import { logLevels } from './logger.ts';
+import { nodeEnvs } from './env';
+import { logLevels } from './logger';
 
 export const AppConfigSchema = z.object({
     github: z.object({

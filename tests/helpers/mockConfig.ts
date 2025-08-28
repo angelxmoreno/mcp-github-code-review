@@ -1,6 +1,6 @@
-import { LogLevel } from '../../src/types/logger.ts';
-import { createConfig } from '../../src/utils/createConfig.ts';
-import { createLogger } from '../../src/utils/createLogger.ts';
+import { LogLevel } from '../../src/types/logger';
+import { createConfig } from '../../src/utils/createConfig';
+import { createLogger } from '../../src/utils/createLogger';
 
 export const mockConfig = {
     github: {

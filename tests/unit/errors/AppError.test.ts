@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { AppError } from '../../../src/errors/AppError.ts';
+import { AppError } from '../../../src/errors/AppError';
 
 describe('AppError', () => {
     test('should handle simple objects correctly', () => {

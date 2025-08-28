@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, mock } from 'bun:test';
-import { ParsingError } from '../../../src/errors/ParsingError.ts';
-import { GitService } from '../../../src/services/GitService.ts';
-import type { RepoBranch } from '../../../src/types/git.ts';
-import { testLogger } from '../../helpers/mockConfig.ts';
+import { ParsingError } from '../../../src/errors/ParsingError';
+import { GitService } from '../../../src/services/GitService';
+import type { RepoBranch } from '../../../src/types/git';
+import { testLogger } from '../../helpers/mockConfig';
 
 // Track which call we're on for sequential responses
 let callCount = 0;

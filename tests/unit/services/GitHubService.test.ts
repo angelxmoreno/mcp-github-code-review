@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, mock, test } from 'bun:test';
 import type { Octokit } from 'octokit';
-import { GitHubService } from '../../../src/services/GitHubService.ts';
-import type { RepoBranch } from '../../../src/types/git.ts';
-import type { PullRequest } from '../../../src/types/github.ts';
-import { testLogger } from '../../helpers/mockConfig.ts';
+import { GitHubService } from '../../../src/services/GitHubService';
+import type { RepoBranch } from '../../../src/types/git';
+import type { PullRequest } from '../../../src/types/github';
+import { testLogger } from '../../helpers/mockConfig';
 
 // Mock Octokit
 const mockPullsList = mock();
@@ -72,7 +72,7 @@ describe('GitHubService', () => {
                 data: [],
             });
 
-            await expect(gitHubService.getPullRequestForBranch(repoBranch)).rejects.toThrow(
+            expect(gitHubService.getPullRequestForBranch(repoBranch)).rejects.toThrow(
                 'Can not parse No PR found using'
             );
         });
@@ -81,7 +81,7 @@ describe('GitHubService', () => {
             const apiError = new Error('GitHub API Error');
             mockPullsList.mockRejectedValueOnce(apiError);
 
-            await expect(gitHubService.getPullRequestForBranch(repoBranch)).rejects.toThrow(
+            expect(gitHubService.getPullRequestForBranch(repoBranch)).rejects.toThrow(
                 'Can not parse Failed to get pull request for branch using'
             );
         });

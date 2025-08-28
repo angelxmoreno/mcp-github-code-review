@@ -1,8 +1,8 @@
 import type { Octokit } from 'octokit';
 import type { Logger } from 'pino';
-import { GitHubServiceError } from '../errors/GitHubServiceError.ts';
-import type { RepoBranch } from '../types/git.ts';
-import type { Comment, PullRequest, ReviewThreadsResponse } from '../types/github.ts';
+import { GitHubServiceError } from '../errors/GitHubServiceError';
+import type { RepoBranch } from '../types/git';
+import type { Comment, PullRequest, ReviewThreadsResponse } from '../types/github';
 
 type GitHubServiceOptions = {
     logger: Logger;

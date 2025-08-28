@@ -1,4 +1,4 @@
-import { AppError } from './AppError.ts';
+import { AppError } from './AppError';
 
 export class ParsingError extends AppError {
     static override errorTpl = 'Can not parse %s using %s';

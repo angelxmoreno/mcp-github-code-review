@@ -1,5 +1,5 @@
 import pino, { type LoggerOptions } from 'pino';
-import type { AppConfig } from '../types/AppConfigSchema.ts';
+import type { AppConfig } from '../types/AppConfigSchema';
 
 export const createLogger = (config: AppConfig) => {
     const baseOptions: LoggerOptions = {
