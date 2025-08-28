@@ -1,0 +1,30 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Lint commit messages
+        run: bun run lint:commits
+
+      - name: Run tests
+        run: bun test
+
+      - name: Run linter
+        run: bun run lint
