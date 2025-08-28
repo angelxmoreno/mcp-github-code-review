@@ -8,7 +8,7 @@
 - src/utils/createLogger
 - src/utils/createContainer
 
-## WorkflowService
+## GitService
 ## GitHubService
 ## ParserService
 ## DatabaseService
