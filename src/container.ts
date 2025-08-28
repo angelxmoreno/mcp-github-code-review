@@ -1,6 +1,6 @@
 import type { DependencyContainer } from 'tsyringe';
-import { appConfig } from './config.ts';
-import { createContainer } from './utils/createContainer.ts';
+import { appConfig } from './config';
+import { createContainer } from './utils/createContainer';
 
 let appContainer: DependencyContainer | undefined;
 

@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
-import { NodeEnv } from '../../../src/types/env.ts';
-import { LogLevel } from '../../../src/types/logger.ts';
-import { createConfig } from '../../../src/utils/createConfig.ts';
-import { mockConfig } from '../../helpers/mockConfig.ts';
+import { NodeEnv } from '../../../src/types/env';
+import { LogLevel } from '../../../src/types/logger';
+import { createConfig } from '../../../src/utils/createConfig';
+import { mockConfig } from '../../helpers/mockConfig';
 
 describe('createConfig', () => {
     let originalNodeEnv: string | undefined;

@@ -1,8 +1,8 @@
 import type { Logger } from 'pino';
 import { container, type DependencyContainer, instanceCachingFactory } from 'tsyringe';
-import type { AppConfig } from '../types/AppConfigSchema.ts';
-import { AppLogger } from '../types/logger.ts';
-import { createLogger } from './createLogger.ts';
+import type { AppConfig } from '../types/AppConfigSchema';
+import { AppLogger } from '../types/logger';
+import { createLogger } from './createLogger';
 
 export const createContainer = (config: AppConfig): DependencyContainer => {
     const appContainer = container.createChildContainer();
