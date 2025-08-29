@@ -7,7 +7,7 @@ export const AppConfigSchema = z.object({
         token: z
             .string()
             .min(1)
-            .regex(/^gh[ps]_[a-zA-Z0-9]{36}$/),
+            .regex(/^gh[ops]_[a-zA-Z0-9]{36}$/),
     }),
     logger: z.object({
         level: z.enum(logLevels),
@@ -16,6 +16,10 @@ export const AppConfigSchema = z.object({
         env: z.enum(nodeEnvs),
         isDevelopment: z.boolean(),
         isTesting: z.boolean(),
+    }),
+    database: z.object({
+        path: z.string(),
+        logging: z.boolean(),
     }),
 });
 
