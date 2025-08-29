@@ -17,11 +17,15 @@
         "lint:commits": "commitlint --from=origin/main --to=HEAD --verbose",
         "typecheck": "tsc --noEmit",
         "check": "bun run lint:fix && bun run typecheck && bun run test",
-        "db:init": "bun run src/scripts/init-db.ts",
         "dev": "bun --hot src/index.ts",
         "start": "bun src/index.ts",
         "cli": "bun src/cli.ts",
-        "dev:cli": "bun --watch src/cli.ts"
+        "dev:cli": "bun --watch src/cli.ts",
+        "migration:create": "bash scripts/create-migration.sh",
+        "migration:generate": "bash scripts/generate-migration.sh",
+        "migration:show": "bun --bun typeorm migration:show -d src/database/dataSource.ts",
+        "migration:run": "bun --bun typeorm migration:run -d src/database/dataSource.ts",
+        "migration:revert": "bun --bun typeorm migration:revert -d src/database/dataSource.ts"
     },
     "dependencies": {
         "get-object-value": "^0.8.1",
