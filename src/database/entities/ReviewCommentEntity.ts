@@ -6,16 +6,13 @@ import { PullRequestEntity } from './PullRequestEntity';
 
 @Entity()
 @Index(['githubCommentId'], { unique: true })
-@Index(['pullRequestId', 'githubCreatedAt'])
+@Index(['pullRequest', 'githubCreatedAt'])
 @Index(['isBot', 'botName'])
 @Index(['isResolved', 'isOutdated'])
 @Index(['agreeWithComment', 'changesDone'])
 @Index(['didReply', 'changesDone'])
-@Index(['pullRequestId', 'agreeWithComment'])
+@Index(['pullRequest', 'agreeWithComment'])
 export class ReviewCommentEntity extends AppEntity {
-    @Column({ type: 'integer', nullable: false })
-    pullRequestId: number;
-
     @Column({ type: 'bigint', nullable: false })
     githubCommentId: number;
 
@@ -43,7 +40,7 @@ export class ReviewCommentEntity extends AppEntity {
     @Column({ type: 'varchar', nullable: false })
     githubUrl: string;
 
-    @Column({ type: 'timestamp', nullable: false })
+    @Column({ type: 'datetime', nullable: false })
     githubCreatedAt: Date;
 
     @Column({ type: 'boolean', default: false })

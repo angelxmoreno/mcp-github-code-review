@@ -20,7 +20,7 @@ export class RepositoryEntity extends AppEntity {
     @Column({ type: 'varchar', nullable: true })
     defaultBranch: string | null;
 
-    @Column({ type: 'timestamp', nullable: true })
+    @Column({ type: 'datetime', nullable: true })
     lastAnalyzedAt: Date | null;
 
     @Column({ type: 'boolean', default: true })

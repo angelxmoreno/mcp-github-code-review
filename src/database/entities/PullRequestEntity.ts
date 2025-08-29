@@ -6,13 +6,10 @@ import { RepositoryEntity } from './RepositoryEntity';
 import { ReviewCommentEntity } from './ReviewCommentEntity';
 
 @Entity()
-@Index(['repositoryId', 'prNumber'], { unique: true })
+@Index(['repository', 'prNumber'], { unique: true })
 @Index(['url'])
 @Index(['state', 'lastFetchedAt'])
 export class PullRequestEntity extends AppEntity {
-    @Column({ type: 'integer', nullable: false })
-    repositoryId: number;
-
     @Column({ type: 'integer', nullable: false })
     prNumber: number;
 
@@ -34,7 +31,7 @@ export class PullRequestEntity extends AppEntity {
     @Column({ type: 'varchar', nullable: true })
     authorLogin: string | null;
 
-    @Column({ type: 'timestamp', nullable: true })
+    @Column({ type: 'datetime', nullable: true })
     lastFetchedAt: Date | null;
 
     @Column({ type: 'integer', default: 0 })

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { createConfig } from '../utils/createConfig';
 import { createDataSource } from './config';
 

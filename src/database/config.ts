@@ -18,7 +18,7 @@ export function createDataSourceOptions(appConfig: AppConfig): DataSourceOptions
         synchronize: false,
         migrationsRun: false,
         entities: [`${__dirname}/entities/*.ts`],
-        migrations: ['src/migrations/*.ts'],
+        migrations: [`${__dirname}/migrations/*.ts`],
         migrationsTableName: 'typeorm_migrations',
         namingStrategy: new InflectionNamingStrategy(),
         logger: typeormLogger,

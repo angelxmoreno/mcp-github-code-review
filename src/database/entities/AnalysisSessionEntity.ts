@@ -5,22 +5,16 @@ import { PullRequestEntity } from './PullRequestEntity';
 import { RepositoryEntity } from './RepositoryEntity';
 
 @Entity()
-@Index(['repositoryId', 'sessionType', 'startedAt'])
+@Index(['repository', 'sessionType', 'startedAt'])
 @Index(['status', 'startedAt'])
 export class AnalysisSessionEntity extends AppEntity {
-    @Column({ type: 'integer', nullable: false })
-    repositoryId: number;
-
-    @Column({ type: 'integer', nullable: true })
-    pullRequestId: number | null;
-
     @Column({ type: 'varchar', nullable: false })
     sessionType: AnalysisSessionType;
 
-    @Column({ type: 'timestamp', nullable: false })
+    @Column({ type: 'datetime', nullable: false })
     startedAt: Date;
 
-    @Column({ type: 'timestamp', nullable: true })
+    @Column({ type: 'datetime', nullable: true })
     completedAt: Date | null;
 
     @Column({ type: 'varchar', nullable: false })

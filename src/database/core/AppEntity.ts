@@ -4,12 +4,12 @@ export abstract class AppEntity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @CreateDateColumn({ type: 'timestamp' })
+    @CreateDateColumn()
     createdDbAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp' })
+    @UpdateDateColumn()
     updatedDbAt: Date;
 
-    @DeleteDateColumn({ type: 'timestamp', nullable: true, default: null })
-    deletedDbAt: Date;
+    @DeleteDateColumn({ nullable: true, default: null })
+    deletedDbAt?: Date | null;
 }
