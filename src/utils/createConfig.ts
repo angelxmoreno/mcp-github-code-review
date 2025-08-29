@@ -5,6 +5,7 @@ import type { DeepPartial } from '../types/DeepPartial';
 import { NodeEnv } from '../types/env';
 import { LogLevel } from '../types/logger';
 import { deepMergeObjs } from './deepMergeObjs';
+import { getSafeConfigValueByPath } from './getSafeConfigValueByPath';
 
 export const createConfig = (overrides: DeepPartial<AppConfig> = {}): AppConfig => {
     const env: NodeEnv = (Bun.env.NODE_ENV ?? NodeEnv.development) as NodeEnv;
@@ -35,6 +36,7 @@ export const createConfig = (overrides: DeepPartial<AppConfig> = {}): AppConfig 
                     path: issue.path,
                     message: issue.message,
                     value: get(merged, issue.path as string[]),
+                    value2: getSafeConfigValueByPath(merged, issue.path),
                 });
             });
         }
