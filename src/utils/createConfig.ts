@@ -1,3 +1,5 @@
+import get from 'get-object-value';
+import { ZodError } from 'zod';
 import { type AppConfig, AppConfigSchema } from '../types/AppConfigSchema';
 import type { DeepPartial } from '../types/DeepPartial';
 import { NodeEnv } from '../types/env';
@@ -23,8 +25,19 @@ export const createConfig = (overrides: DeepPartial<AppConfig> = {}): AppConfig 
             logging: (Bun.env.DB_LOGGING ?? 'false').toLowerCase() === 'true',
         },
     };
-
     const merged = deepMergeObjs(defaultConfig, overrides);
-
-    return AppConfigSchema.parse(merged);
+    try {
+        return AppConfigSchema.parse(merged);
+    } catch (e: unknown) {
+        if (e instanceof ZodError) {
+            e.issues.forEach((issue) => {
+                console.error('validation Error', {
+                    path: issue.path,
+                    message: issue.message,
+                    value: get(merged, issue.path as string[]),
+                });
+            });
+        }
+        throw e;
+    }
 };

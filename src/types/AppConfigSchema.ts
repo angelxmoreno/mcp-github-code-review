@@ -7,7 +7,7 @@ export const AppConfigSchema = z.object({
         token: z
             .string()
             .min(1)
-            .regex(/^gh[ps]_[a-zA-Z0-9]{36}$/),
+            .regex(/^gh[ops]_[a-zA-Z0-9]{36}$/),
     }),
     logger: z.object({
         level: z.enum(logLevels),

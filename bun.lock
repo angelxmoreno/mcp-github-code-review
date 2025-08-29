@@ -4,6 +4,7 @@
     "": {
       "name": "mcp-github-code-review",
       "dependencies": {
+        "get-object-value": "^0.8.1",
         "hono": "^4.9.4",
         "inflection": "^3.0.2",
         "octokit": "^5.0.3",
@@ -216,6 +217,8 @@
 
     "call-bound": ["call-bound@1.0.4", "", { "dependencies": { "call-bind-apply-helpers": "^1.0.2", "get-intrinsic": "^1.3.0" } }, "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg=="],
 
+    "call-func": ["call-func@0.5.3", "", { "dependencies": { "reshow-constant": "*", "reshow-runtime": "*" } }, "sha512-VnJ6pYpqCNhGm3VKmlg3iu1PJ31NLM30C/0eP64L3vx0qsFAoyplFtPtLkdqQVhi5FvnfQYzI74Jfu8OWNk2vw=="],
+
     "callsites": ["callsites@3.1.0", "", {}, "sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ=="],
 
     "chalk": ["chalk@5.6.0", "", {}, "sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ=="],
@@ -337,6 +340,8 @@
     "get-caller-file": ["get-caller-file@2.0.5", "", {}, "sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg=="],
 
     "get-intrinsic": ["get-intrinsic@1.3.0", "", { "dependencies": { "call-bind-apply-helpers": "^1.0.2", "es-define-property": "^1.0.1", "es-errors": "^1.3.0", "es-object-atoms": "^1.1.1", "function-bind": "^1.1.2", "get-proto": "^1.0.1", "gopd": "^1.2.0", "has-symbols": "^1.1.0", "hasown": "^2.0.2", "math-intrinsics": "^1.1.0" } }, "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ=="],
+
+    "get-object-value": ["get-object-value@0.8.1", "", { "dependencies": { "call-func": "*", "reshow-constant": "*", "reshow-runtime": "*" } }, "sha512-VL7QeO97OZxJvDg0YFPZGDkSkYhslh+5qudNZDLsjGAv7mRsfrcq+c/b/kRJI0c9N6pxdXa6zdtgNRjnNwTHHg=="],
 
     "get-proto": ["get-proto@1.0.1", "", { "dependencies": { "dunder-proto": "^1.0.1", "es-object-atoms": "^1.0.0" } }, "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g=="],
 
@@ -585,6 +590,10 @@
     "require-directory": ["require-directory@2.1.1", "", {}, "sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q=="],
 
     "require-from-string": ["require-from-string@2.0.2", "", {}, "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw=="],
+
+    "reshow-constant": ["reshow-constant@0.18.0", "", {}, "sha512-PfP3L0abOw353Ma0eBHjcBr7Tku4pDFQOrBIwUW7+Re/SwJ15NaNX0BLhHjXWrHJFzmmc7aCDGM3XRDbfhDXlA=="],
+
+    "reshow-runtime": ["reshow-runtime@0.17.15", "", { "dependencies": { "reshow-constant": "*" } }, "sha512-jhGSkf7H4mO1KaweNu6d6ZnPd4zdxcWVwL6D7wrmHBckQZgBDXT6MkV+ji1KCLI4wOFYsBptAeo64AEPiqv/kw=="],
 
     "resolve-from": ["resolve-from@5.0.0", "", {}, "sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw=="],
 

@@ -24,6 +24,7 @@
         "dev:cli": "bun --watch src/cli.ts"
     },
     "dependencies": {
+        "get-object-value": "^0.8.1",
         "hono": "^4.9.4",
         "inflection": "^3.0.2",
         "octokit": "^5.0.3",
