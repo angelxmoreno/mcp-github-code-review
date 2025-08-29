@@ -17,6 +17,10 @@ export const AppConfigSchema = z.object({
         isDevelopment: z.boolean(),
         isTesting: z.boolean(),
     }),
+    database: z.object({
+        path: z.string(),
+        logging: z.boolean(),
+    }),
 });
 
 export type AppConfig = z.infer<typeof AppConfigSchema>;

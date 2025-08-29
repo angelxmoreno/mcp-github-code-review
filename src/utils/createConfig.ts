@@ -18,6 +18,10 @@ export const createConfig = (overrides: DeepPartial<AppConfig> = {}): AppConfig 
             isDevelopment: env === NodeEnv.development,
             isTesting: env === NodeEnv.test,
         },
+        database: {
+            path: Bun.env.DB_PATH ?? './db/mcp.sqlite3',
+            logging: (Bun.env.DB_LOGGING ?? 'false').toLowerCase() === 'true',
+        },
     };
 
     const merged = deepMergeObjs(defaultConfig, overrides);
