@@ -16,10 +16,10 @@ export function createDataSourceOptions(appConfig: AppConfig): DataSourceOptions
         database: appConfig.database.path,
         ...appConfig.database,
         synchronize: false,
-        migrationsRun: false,
         entities: [`${__dirname}/entities/*.ts`],
         migrations: [`${__dirname}/migrations/*.ts`],
         migrationsTableName: 'typeorm_migrations',
+        migrationsRun: true,
         namingStrategy: new InflectionNamingStrategy(),
         logger: typeormLogger,
     };
